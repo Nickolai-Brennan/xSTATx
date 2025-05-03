@@ -26,6 +26,32 @@ It accounts for both quantitative production and qualitative context to produce 
 
 ---
 
+## 🧪 PyBaseball Integration
+
+To support weekly refreshes and enrich stat pipelines, RRI uses the `pybaseball` Python library to pull the most current MLB pitching data.
+
+### Example Functions Used:
+```python
+from pybaseball import statcast, pitching_stats
+
+# Pull season-level pitching stats for relievers
+data = pitching_stats(start_season=2024, end_season=2024, qual=0)
+
+# Filter by role or appearances if needed
+relievers = data[(data['IP'] < 90) & (data['G'] > 10)]
+```
+
+### Benefits:
+- 🔁 Automates access to rolling stats for ERA, K/9, BB/9, WHIP, xFIP, etc.
+- ⚙️ Enables RRI to update midweek without manual data entry
+- 🧠 Powers additional ML models for forecasting future RRI score swings
+
+### Notes:
+- Integrated within the Databricks + Google Sheets data pipeline
+- Also used for syncing `Player_ID`, team, and stat blocks across sources
+
+---
+
 ## 🔍 Key Formula Components
 
 ### 🔹 RRI_Current_Season (50%)
